@@ -156,7 +156,7 @@ void CGameWindow::mainLoop(void *appPointer)
 	double current_time, delta_time;
 	double PCFreq = 0.0;
 	int FPScount = 0;
-	double one_second = 0;
+	double One_second = 0;
 	__int64 CounterStart = 0;
 	LARGE_INTEGER li;
 
@@ -200,13 +200,12 @@ void CGameWindow::mainLoop(void *appPointer)
 		}
 		if (delta_time > 0.0)
 		{
-			one_second += delta_time;
-			if (one_second >= 1000.0)
+			One_second += delta_time;
+			if (One_second >= 1000.0)
 			{
 				cout << "FPS: " << FPScount << endl;
-				one_second = 0;
+				One_second = 0;
 				FPScount = 0;
-
 			}
 
 		}
