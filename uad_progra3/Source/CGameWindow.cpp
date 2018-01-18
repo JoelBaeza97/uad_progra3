@@ -6,6 +6,7 @@
 
 #include <iostream>
 using namespace std;
+#include <time.h>
 
 #include "../Include/CGameWindow.h"
 #include "../Include/CApp.h"
@@ -154,6 +155,8 @@ void CGameWindow::mainLoop(void *appPointer)
 	double accumulator = 0;
 	double current_time, delta_time;
 	double PCFreq = 0.0;
+	int FPScount = 0;
+	double one_second = 0;
 	__int64 CounterStart = 0;
 	LARGE_INTEGER li;
 
@@ -191,9 +194,21 @@ void CGameWindow::mainLoop(void *appPointer)
 		current_time = double(li.QuadPart - CounterStart) / PCFreq;
 		delta_time   = current_time - last_time; // Calculate elapsed time
 		last_time    = current_time;             // Update last time to be the current time
-		accumulator += delta_time;               // 
-		while (accumulator >= dt) {              //
+		accumulator += delta_time;				 // 
+		while (accumulator >= dt) { 
 			accumulator -= dt;
+		}
+		if (delta_time > 0.0)
+		{
+			one_second += delta_time;
+			if (one_second >= 1000.0)
+			{
+				cout << "FPS: " << FPScount << endl;
+				one_second = 0;
+				FPScount = 0;
+
+			}
+
 		}
 
 		/* Update */
@@ -207,10 +222,13 @@ void CGameWindow::mainLoop(void *appPointer)
 
 		/* Poll for and process events */
 		glfwPollEvents();
+
+		FPScount++;
 	}
 
 	/* Cleanup GLFW window */
 	glfwDestroyWindow(m_Window);
+	
 }
 
 /*
