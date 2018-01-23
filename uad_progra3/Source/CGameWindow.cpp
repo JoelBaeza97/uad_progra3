@@ -200,8 +200,11 @@ void CGameWindow::mainLoop(void *appPointer)
 		last_time    = current_time;             // Update last time to be the current time
 		accumulator += delta_time;				 // 
 		while (accumulator >= dt) { 
+			/* Update */
+			((CApp *)appPointer)->update((float)dt);
 			accumulator -= dt;
 		}
+		
 		if (delta_time > 0.0)
 		{
 			One_second += delta_time;
@@ -211,11 +214,7 @@ void CGameWindow::mainLoop(void *appPointer)
 				One_second = 0;
 				FPScount = 0;
 			}
-
 		}
-
-		/* Update */
-		((CApp *)appPointer)->update((float)delta_time);
 
 		/* Render */
 		((CApp *)appPointer)->render();
